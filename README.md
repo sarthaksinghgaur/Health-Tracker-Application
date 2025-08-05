@@ -34,14 +34,6 @@ Spano-Assessment-Round/
 
 ## How to Run
 
-### Option 1: Run Both Frontend and Backend Together (Recommended)
-```bash
-npm run dev
-```
-This single command starts both the backend server and serves the frontend.
-
-### Option 2: Run Individually
-
 #### Backend Only
 ```bash
 cd backend
@@ -51,7 +43,10 @@ python -m uvicorn app.main:app --reload
 Backend runs on: `http://127.0.0.1:8000`
 
 #### Frontend Only
-Open `frontend/index.html` in your browser or serve the frontend directory.
+```bash
+cd frontend && live-server
+```
+Frontend runs on: `http://127.0.0.1:8080`
 
 ## API Testing
 
