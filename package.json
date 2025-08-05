@@ -1,0 +1,13 @@
+{
+  "name": "professional_health_tracker",
+  "version": "1.0.0",
+  "scripts": {
+    "dev:backend": "cd backend && uvicorn app.main:app --reload",
+    "dev:frontend": "cd frontend && live-server",
+    "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "live-server": "^1.2.2"
+  }
+}
