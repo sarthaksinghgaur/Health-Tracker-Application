@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Tracker - Welcome</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .landing-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-primary);
+      padding: 2rem;
+    }
+    
+    .landing-card {
+      background: var(--bg-card);
+      border-radius: 2rem;
+      padding: 4rem;
+      box-shadow: var(--shadow-xl);
+      text-align: center;
+      max-width: 600px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .landing-logo {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .landing-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .landing-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+    
+    .landing-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .landing-features {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-item {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 1rem;
+      border: 1px solid var(--border-color);
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--accent-primary);
+      margin-bottom: 1rem;
+    }
+    
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-container">
+    <div class="landing-card">
+      <div class="landing-logo">
+        <i class="fas fa-heartbeat"></i>
+      </div>
+      
+      <h1 class="landing-title">HealthTracker</h1>
+      <p class="landing-subtitle">
+        Track your daily nutrition, monitor your health goals, and stay on top of your wellness journey with our modern health tracking application.
+      </p>
+      
+      <div class="landing-buttons">
+        <a href="login.html" class="btn-primary">
+          <i class="fas fa-sign-in-alt"></i>
+          Sign In
+        </a>
+        <a href="register.html" class="btn-secondary">
+          <i class="fas fa-user-plus"></i>
+          Create Account
+        </a>
+      </div>
+      
+      <div class="landing-features">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="feature-title">Track Progress</div>
+          <div class="feature-desc">Monitor your daily calorie intake and nutrition goals</div>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <div class="feature-title">Log Meals</div>
+          <div class="feature-desc">Easily log your meals with our intuitive interface</div>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div class="feature-title">Responsive Design</div>
+          <div class="feature-desc">Works perfectly on desktop, tablet, and mobile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Check if user is already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const username = localStorage.getItem('username');
+      if (username) {
+        // Redirect to dashboard if already logged in
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html> 

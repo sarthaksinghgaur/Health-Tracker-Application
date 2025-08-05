@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Health Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>HealthTracker</span>
+        </div>
+        <h1>Welcome Back</h1>
+        <p>Sign in to continue your health journey</p>
+      </div>
+      
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="username">
+            <i class="fas fa-user"></i>
+            Username
+          </label>
+          <input type="text" name="username" id="username" placeholder="Enter your username" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="password">
+            <i class="fas fa-lock"></i>
+            Password
+          </label>
+          <div class="password-input">
+            <input type="password" name="password" id="password" placeholder="Enter your password" required />
+            <button type="button" class="password-toggle" onclick="togglePassword()">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" name="remember" id="remember" />
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+        </div>
+        
+        <button type="submit" class="btn-primary btn-full">
+          <i class="fas fa-sign-in-alt"></i>
+          Sign In
+        </button>
+      </form>
+      
+      <div class="auth-divider">
+        <span>or</span>
+      </div>
+      
+      <div class="auth-links">
+        <a href="register.html" class="btn-secondary btn-full">
+          <i class="fas fa-user-plus"></i>
+          Create New Account
+        </a>
+      </div>
+      
+      <div class="auth-footer">
+        <button id="themeToggle" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+          <span>Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="toast" class="toast"></div>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html> 

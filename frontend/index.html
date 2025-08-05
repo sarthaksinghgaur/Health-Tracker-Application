@@ -2,39 +2,519 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Health Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Tracker - Dashboard</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
-    <h1>Health Tracker Dashboard</h1>
-    <button id="themeToggle">Toggle Theme</button>
-  </header>
-  <main class="container">
-    <section id="statusSection">
-      <h2>Daily Status</h2>
-      <div id="status"></div>
-    </section>
-    <section id="logSection">
-      <h2>Log Meal</h2>
-      <form id="mealForm">
-        <select name="meal_type">
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="snack">Snack</option>
-        </select>
-        <input type="text" name="item_name" placeholder="Food name" required />
-        <input type="number" step="0.1" name="quantity" placeholder="Qty" value="1" />
-        <button type="submit">Log</button>
-      </form>
-    </section>
-    <section id="historySection">
-      <h2>Meal History</h2>
-      <ul id="history"></ul>
-    </section>
-  </main>
-  <div id="toast"></div>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>HealthTracker</span>
+        </div>
+      </div>
+      <div class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-section="dashboard">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#meals" class="nav-item" data-section="meals">
+          <i class="fas fa-utensils"></i>
+          <span>Meals</span>
+        </a>
+        <a href="#analytics" class="nav-item" data-section="analytics">
+          <i class="fas fa-chart-bar"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="#profile" class="nav-item" data-section="profile">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+          <span>Dark Mode</span>
+        </button>
+        <button id="logoutBtn" class="btn-logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <h1>Welcome back, <span id="userDisplayName">User</span>!</h1>
+          <p>Track your daily nutrition and stay healthy</p>
+        </div>
+        <div class="header-right">
+          <div class="user-profile">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+              <span class="username" id="currentUser"></span>
+              <span class="user-status">Active</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+          <!-- Status Cards -->
+          <div class="status-section">
+            <div class="section-header">
+              <h2><i class="fas fa-chart-pie"></i> Daily Overview</h2>
+            </div>
+            <div class="status-grid" id="status"></div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="quick-actions">
+            <div class="section-header">
+              <h2><i class="fas fa-plus-circle"></i> Log New Meal</h2>
+            </div>
+            <div class="meal-form-container">
+              <form id="mealForm" class="meal-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="meal_type">
+                      <i class="fas fa-utensils"></i>
+                      Meal Type
+                    </label>
+                    <select name="meal_type" id="meal_type" required>
+                      <option value="">Select meal type</option>
+                      <option value="breakfast">Breakfast</option>
+                      <option value="lunch">Lunch</option>
+                      <option value="dinner">Dinner</option>
+                      <option value="snack">Snack</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="item_name">
+                      <i class="fas fa-apple-alt"></i>
+                      Food Item
+                    </label>
+                    <input type="text" name="item_name" id="item_name" placeholder="Enter food name" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="quantity">
+                      <i class="fas fa-weight"></i>
+                      Quantity
+                    </label>
+                    <input type="number" step="0.1" name="quantity" id="quantity" placeholder="1.0" value="1" min="0.1" />
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn-primary">
+                      <i class="fas fa-plus"></i>
+                      Log Meal
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Recent Meals -->
+          <div class="history-section">
+            <div class="section-header">
+              <h2><i class="fas fa-history"></i> Recent Meals</h2>
+              <button class="btn-secondary">
+                <i class="fas fa-filter"></i>
+                Filter
+              </button>
+            </div>
+            <div class="history-container">
+              <div id="history" class="meal-history"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Meals Section -->
+        <section id="meals" class="content-section">
+          <div class="section-header">
+            <h2><i class="fas fa-utensils"></i> Meal Management</h2>
+          </div>
+          
+          <div class="meals-grid">
+            <div class="meal-category-card">
+              <div class="meal-category-header">
+                <i class="fas fa-sun"></i>
+                <h3>Breakfast</h3>
+              </div>
+              <div class="meal-category-content">
+                <div class="meal-stats">
+                  <div class="stat-item">
+                    <span class="stat-value" id="breakfast-count">0</span>
+                    <span class="stat-label">Meals</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" id="breakfast-calories">0</span>
+                    <span class="stat-label">Calories</span>
+                  </div>
+                </div>
+                <div class="meal-list" id="breakfast-list">
+                  <p class="empty-state">No breakfast meals logged yet</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="meal-category-card">
+              <div class="meal-category-header">
+                <i class="fas fa-cloud-sun"></i>
+                <h3>Lunch</h3>
+              </div>
+              <div class="meal-category-content">
+                <div class="meal-stats">
+                  <div class="stat-item">
+                    <span class="stat-value" id="lunch-count">0</span>
+                    <span class="stat-label">Meals</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" id="lunch-calories">0</span>
+                    <span class="stat-label">Calories</span>
+                  </div>
+                </div>
+                <div class="meal-list" id="lunch-list">
+                  <p class="empty-state">No lunch meals logged yet</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="meal-category-card">
+              <div class="meal-category-header">
+                <i class="fas fa-moon"></i>
+                <h3>Dinner</h3>
+              </div>
+              <div class="meal-category-content">
+                <div class="meal-stats">
+                  <div class="stat-item">
+                    <span class="stat-value" id="dinner-count">0</span>
+                    <span class="stat-label">Meals</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" id="dinner-calories">0</span>
+                    <span class="stat-label">Calories</span>
+                  </div>
+                </div>
+                <div class="meal-list" id="dinner-list">
+                  <p class="empty-state">No dinner meals logged yet</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="meal-category-card">
+              <div class="meal-category-header">
+                <i class="fas fa-cookie-bite"></i>
+                <h3>Snacks</h3>
+              </div>
+              <div class="meal-category-content">
+                <div class="meal-stats">
+                  <div class="stat-item">
+                    <span class="stat-value" id="snack-count">0</span>
+                    <span class="stat-label">Meals</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" id="snack-calories">0</span>
+                    <span class="stat-label">Calories</span>
+                  </div>
+                </div>
+                <div class="meal-list" id="snack-list">
+                  <p class="empty-state">No snacks logged yet</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="content-section">
+          <div class="section-header">
+            <h2><i class="fas fa-chart-bar"></i> Analytics & Insights</h2>
+          </div>
+          
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <div class="analytics-header">
+                <h3><i class="fas fa-calendar-week"></i> Weekly Overview</h3>
+              </div>
+              <div class="analytics-content">
+                <div class="chart-container">
+                  <canvas id="weeklyChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <span class="legend-color" style="background: var(--accent-primary);"></span>
+                    <span>Calories</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-color" style="background: var(--accent-success);"></span>
+                    <span>Goal</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="analytics-card">
+              <div class="analytics-header">
+                <h3><i class="fas fa-pie-chart"></i> Nutrition Breakdown</h3>
+              </div>
+              <div class="analytics-content">
+                <div class="nutrition-stats">
+                  <div class="nutrition-item">
+                    <div class="nutrition-icon protein">
+                      <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="nutrition-info">
+                      <span class="nutrition-value" id="protein-percentage">0%</span>
+                      <span class="nutrition-label">Protein</span>
+                    </div>
+                  </div>
+                  <div class="nutrition-item">
+                    <div class="nutrition-icon carbs">
+                      <i class="fas fa-bread-slice"></i>
+                    </div>
+                    <div class="nutrition-info">
+                      <span class="nutrition-value" id="carbs-percentage">0%</span>
+                      <span class="nutrition-label">Carbs</span>
+                    </div>
+                  </div>
+                  <div class="nutrition-item">
+                    <div class="nutrition-icon fat">
+                      <i class="fas fa-cheese"></i>
+                    </div>
+                    <div class="nutrition-info">
+                      <span class="nutrition-value" id="fat-percentage">0%</span>
+                      <span class="nutrition-label">Fat</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="analytics-card">
+              <div class="analytics-header">
+                <h3><i class="fas fa-trending-up"></i> Progress Trends</h3>
+              </div>
+              <div class="analytics-content">
+                <div class="trend-stats">
+                  <div class="trend-item positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <div class="trend-info">
+                      <span class="trend-value">+12%</span>
+                      <span class="trend-label">This Week</span>
+                    </div>
+                  </div>
+                  <div class="trend-item negative">
+                    <i class="fas fa-arrow-down"></i>
+                    <div class="trend-info">
+                      <span class="trend-value">-5%</span>
+                      <span class="trend-label">Last Week</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="analytics-card">
+              <div class="analytics-header">
+                <h3><i class="fas fa-target"></i> Goal Achievement</h3>
+              </div>
+              <div class="analytics-content">
+                <div class="goal-progress">
+                  <div class="goal-circle">
+                    <div class="goal-percentage" id="goal-percentage">75%</div>
+                    <div class="goal-label">Daily Goal</div>
+                  </div>
+                  <div class="goal-stats">
+                    <div class="goal-stat">
+                      <span class="goal-stat-value" id="goal-current">1500</span>
+                      <span class="goal-stat-label">Current</span>
+                    </div>
+                    <div class="goal-stat">
+                      <span class="goal-stat-value" id="goal-target">2000</span>
+                      <span class="goal-stat-label">Target</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section">
+          <div class="section-header">
+            <h2><i class="fas fa-user"></i> Profile & Settings</h2>
+          </div>
+          
+          <div class="profile-grid">
+            <div class="profile-card">
+              <div class="profile-header">
+                <div class="profile-avatar-large">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                  <h3 id="profile-name">User Name</h3>
+                  <p id="profile-email">user@example.com</p>
+                  <span class="profile-status">Active Member</span>
+                </div>
+              </div>
+              <div class="profile-stats">
+                <div class="profile-stat">
+                  <span class="profile-stat-value" id="profile-days">0</span>
+                  <span class="profile-stat-label">Days Active</span>
+                </div>
+                <div class="profile-stat">
+                  <span class="profile-stat-value" id="profile-meals">0</span>
+                  <span class="profile-stat-label">Meals Logged</span>
+                </div>
+                <div class="profile-stat">
+                  <span class="profile-stat-value" id="profile-goals">0</span>
+                  <span class="profile-stat-label">Goals Met</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-card">
+              <div class="profile-section-header">
+                <h3><i class="fas fa-user-edit"></i> Personal Information</h3>
+              </div>
+              <form id="profileForm" class="profile-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="profile-username">Username</label>
+                    <input type="text" id="profile-username" value="" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="profile-age">Age</label>
+                    <input type="number" id="profile-age" value="" min="1" max="120" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="profile-gender">Gender</label>
+                    <select id="profile-gender">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="profile-weight">Weight (kg)</label>
+                    <input type="number" id="profile-weight" value="" step="0.1" min="20" max="300" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="profile-height">Height (cm)</label>
+                    <input type="number" id="profile-height" value="" step="0.1" min="100" max="250" />
+                  </div>
+                  <div class="form-group">
+                    <label for="profile-bmr">BMR</label>
+                    <input type="number" id="profile-bmr" value="" readonly />
+                  </div>
+                </div>
+                <button type="submit" class="btn-primary">
+                  <i class="fas fa-save"></i>
+                  Update Profile
+                </button>
+              </form>
+            </div>
+
+            <div class="profile-card">
+              <div class="profile-section-header">
+                <h3><i class="fas fa-cog"></i> Preferences</h3>
+              </div>
+              <div class="preferences-list">
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <span class="preference-label">Dark Mode</span>
+                    <span class="preference-desc">Toggle dark/light theme</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="darkModeToggle" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <span class="preference-label">Notifications</span>
+                    <span class="preference-desc">Receive meal reminders</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="notificationsToggle" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <span class="preference-label">Auto-save</span>
+                    <span class="preference-desc">Automatically save meal data</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="autoSaveToggle" checked />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-card">
+              <div class="profile-section-header">
+                <h3><i class="fas fa-chart-line"></i> Health Goals</h3>
+              </div>
+              <div class="goals-list">
+                <div class="goal-item">
+                  <div class="goal-info">
+                    <span class="goal-label">Daily Calorie Goal</span>
+                    <span class="goal-value" id="daily-calorie-goal">2000 kcal</span>
+                  </div>
+                  <button class="btn-secondary btn-small" onclick="editGoal('calories')">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+                <div class="goal-item">
+                  <div class="goal-info">
+                    <span class="goal-label">Protein Goal</span>
+                    <span class="goal-value" id="protein-goal">150g</span>
+                  </div>
+                  <button class="btn-secondary btn-small" onclick="editGoal('protein')">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+                <div class="goal-item">
+                  <div class="goal-info">
+                    <span class="goal-label">Weekly Workouts</span>
+                    <span class="goal-value" id="workout-goal">3 sessions</span>
+                  </div>
+                  <button class="btn-secondary btn-small" onclick="editGoal('workouts')">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast" class="toast"></div>
+
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -18,6 +18,7 @@ class MealType(str, Enum):
 
 class User(BaseModel):
     username: str
+    password: str
     age: int
     gender: Gender
     weight_kg: float
@@ -42,6 +43,12 @@ class StatusResponse(BaseModel):
     protein: float
     carbs: float
     fat: float
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+    remember: bool = False
 
 
 class WebhookPayload(BaseModel):
