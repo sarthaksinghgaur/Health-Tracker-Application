@@ -1,4 +1,4 @@
-# Spano Assessment Round - Health Tracker Application
+# Health Tracker Application
 
 A health tracking application with user authentication, meal logging, and nutrition analytics.
 
